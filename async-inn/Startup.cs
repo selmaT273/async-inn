@@ -15,8 +15,10 @@ namespace async_inn
 {
     public class Startup
     {
+        // Add property to hold configuration
         public IConfiguration Configuration { get; }
 
+        // Magic to get an IConfiguration from somewhere
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,7 +31,10 @@ namespace async_inn
 
             services.AddDbContext<AsyncInnDbContext>(options =>
             {
+                // Similar to process.env.DATABASE_URL in Node
                 string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+                // Use that connection string with SQL Server
                 options.UseSqlServer(connectionString);
             });
         }
