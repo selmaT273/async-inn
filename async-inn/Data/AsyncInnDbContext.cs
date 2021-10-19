@@ -12,5 +12,14 @@ namespace async_inn.Data
         }
 
         public DbSet<Hotel> Hotels { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Hotel>()
+                .HasData(new[]
+                {
+                    new Hotel{Id = 1, Name = "Haunted Hotel"}
+                });
+        }
     }
 }
