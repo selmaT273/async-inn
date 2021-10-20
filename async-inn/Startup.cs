@@ -42,7 +42,7 @@ namespace async_inn
 
             services.AddControllers();
 
-            services.AddSingleton<IHotelRepository, DatabaseHotelRepository>();
+            services.AddScoped<IHotelRepository, DatabaseHotelRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
