@@ -10,5 +10,6 @@ namespace async_inn.Models.Services
         Task<List<Hotel>> GetAll();
 
         Task<Hotel> GetById(int id);
+        Task CreateHotel(Hotel hotel);
     }
 }

@@ -18,6 +18,12 @@ namespace async_inn.Services
             _context = context;
         }
 
+        public async Task CreateHotel(Hotel hotel)
+        {
+            _context.Hotels.Add(hotel);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<List<Hotel>> GetAll()
         {
             return await _context.Hotels.ToListAsync();

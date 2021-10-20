@@ -73,12 +73,9 @@ namespace async_inn.Controllers
         // POST: api/Hotels
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
+        public async Task PostHotel(Hotel hotel)
         {
-            _context.Hotels.Add(hotel);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetHotel", new { id = hotel.Id }, hotel);
+            await hotels.CreateHotel(hotel);
         }
 
         // DELETE: api/Hotels/5
