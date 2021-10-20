@@ -36,14 +36,7 @@ namespace async_inn.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Hotel>> GetHotel(int id)
         {
-            var hotel = await _context.Hotels.FindAsync(id);
-
-            if (hotel == null)
-            {
-                return NotFound();
-            }
-
-            return hotel;
+            return await hotels.GetById(id);
         }
 
         // PUT: api/Hotels/5

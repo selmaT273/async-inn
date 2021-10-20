@@ -22,5 +22,10 @@ namespace async_inn.Services
         {
             return await _context.Hotels.ToListAsync();
         }
+
+        public async Task<Hotel> GetById(int id)
+        {
+            return await _context.Hotels.FindAsync(id);
+        }
     }
 }
