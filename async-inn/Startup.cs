@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using async_inn.Data;
+using async_inn.Models.Services;
+using async_inn.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -39,6 +41,8 @@ namespace async_inn
             });
 
             services.AddControllers();
+
+            services.AddSingleton<IHotelRepository, DatabaseHotelRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
