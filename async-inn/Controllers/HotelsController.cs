@@ -42,32 +42,9 @@ namespace async_inn.Controllers
         // PUT: api/Hotels/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHotel(int id, Hotel hotel)
+        public async Task<ActionResult<bool>> PutHotel(int id, Hotel hotel)
         {
-            if (id != hotel.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(hotel).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!HotelExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return await hotels.UpdateHotel(id, hotel);
         }
 
         // POST: api/Hotels

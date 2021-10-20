@@ -12,5 +12,6 @@ namespace async_inn.Models.Services
         Task<Hotel> GetById(int id);
         Task CreateHotel(Hotel hotel);
         Task<bool> RemoveHotel(int id);
+        Task<bool> UpdateHotel(int id, Hotel hotel);
     }
 }
