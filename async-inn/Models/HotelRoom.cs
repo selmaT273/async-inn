@@ -10,5 +10,10 @@ namespace async_inn.Models
 
         [Required]
         public int RoomId { get; set; }
+
+        // Navigation Properties
+        public Hotel Hotel { get; set; }
+
+        public Room Room { get; set; }
     }
 }
