@@ -40,7 +40,11 @@ namespace async_inn
                 options.UseSqlServer(connectionString);
             });
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                });
 
             services.AddScoped<IHotelRepository, DatabaseHotelRepository>();
 
