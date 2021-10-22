@@ -17,6 +17,12 @@ namespace async_inn.Services
             _context = context;
         }
 
+        public async Task CreateRoom(Room room)
+        {
+            _context.Rooms.Add(room);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<List<Room>> GetAll()
         {
             return await _context.Rooms.ToListAsync();

@@ -10,5 +10,6 @@ namespace async_inn.Services
     {
         Task<List<Room>> GetAll();
         Task<ActionResult<Room>> GetById(int id);
+        Task CreateRoom(Room room);
     }
 }
