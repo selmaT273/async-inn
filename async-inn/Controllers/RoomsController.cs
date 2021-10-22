@@ -49,22 +49,9 @@ namespace async_inn.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(room).State = EntityState.Modified;
-
-            try
+            if (!await rooms.UpdateRoom(id, room))
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RoomExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return NoContent();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using async_inn.Data;
 using async_inn.Models;
@@ -31,6 +32,34 @@ namespace async_inn.Services
         public async Task<ActionResult<Room>> GetById(int id)
         {
             return await _context.Rooms.FindAsync(id);
+        }
+
+        public async Task<bool> UpdateRoom(int id, Room room)
+        {
+            if (id != room.Id)
+            {
+                return false;
+            }
+
+            _context.Entry(room).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.Rooms.Any(e => e.Id == id))
+                {
+                    return false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return true;
         }
     }
 }
