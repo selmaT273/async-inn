@@ -8,5 +8,6 @@ namespace async_inn.Services
     public interface IAmenityRepository
     {
         Task<ActionResult<IEnumerable<Amenity>>> GetAll();
+        Task<ActionResult<Amenity>> GetById(int id);
     }
 }

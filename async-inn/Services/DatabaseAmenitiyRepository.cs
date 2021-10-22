@@ -20,5 +20,10 @@ namespace async_inn.Services
         {
             return await _context.Amenities.ToListAsync();
         }
+
+        public async Task<ActionResult<Amenity>> GetById(int id)
+        {
+            return await _context.Amenities.FindAsync(id);
+        }
     }
 }
