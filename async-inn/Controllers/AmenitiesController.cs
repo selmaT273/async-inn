@@ -59,12 +59,9 @@ namespace async_inn.Controllers
         // POST: api/Amenities
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Amenity>> PostAmenity(Amenity amenity)
+        public async Task PostAmenity(Amenity amenity)
         {
-            _context.Amenities.Add(amenity);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetAmenity", new { id = amenity.Id }, amenity);
+            await amenities.CreateAmenity(amenity);
         }
 
         // DELETE: api/Amenities/5

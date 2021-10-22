@@ -17,6 +17,12 @@ namespace async_inn.Services
             _context = context;
         }
 
+        public async Task CreateAmenity(Amenity amenity)
+        {
+            _context.Amenities.Add(amenity);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<ActionResult<IEnumerable<Amenity>>> GetAll()
         {
             return await _context.Amenities.ToListAsync();
