@@ -9,5 +9,6 @@ namespace async_inn.Services
     {
         Task<ActionResult<IEnumerable<Amenity>>> GetAll();
         Task<ActionResult<Amenity>> GetById(int id);
+        Task<bool> UpdateAmenity(int id, Amenity amenity);
     }
 }
