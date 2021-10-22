@@ -30,6 +30,7 @@ namespace async_inn.Services
             return await _context.Hotels.ToListAsync();
         }
 
+        // TODO: Handle if Id does not exist
         public async Task<Hotel> GetById(int id)
         {
             return await _context.Hotels.FindAsync(id);

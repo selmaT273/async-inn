@@ -35,14 +35,8 @@ namespace async_inn.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Room>> GetRoom(int id)
         {
-            var room = await _context.Rooms.FindAsync(id);
-
-            if (room == null)
-            {
-                return NotFound();
-            }
-
-            return room;
+            // TODO: Handle if id is not found
+            return await rooms.GetById(id);
         }
 
         // PUT: api/Rooms/5

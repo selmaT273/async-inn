@@ -9,5 +9,6 @@ namespace async_inn.Services
     public interface IRoomRepository
     {
         Task<List<Room>> GetAll();
+        Task<ActionResult<Room>> GetById(int id);
     }
 }

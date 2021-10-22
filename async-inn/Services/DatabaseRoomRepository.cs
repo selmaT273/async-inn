@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using async_inn.Data;
 using async_inn.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace async_inn.Services
@@ -19,6 +20,11 @@ namespace async_inn.Services
         public async Task<List<Room>> GetAll()
         {
             return await _context.Rooms.ToListAsync();
+        }
+
+        public async Task<ActionResult<Room>> GetById(int id)
+        {
+            return await _context.Rooms.FindAsync(id);
         }
     }
 }

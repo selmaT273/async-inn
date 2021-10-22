@@ -36,6 +36,7 @@ namespace async_inn.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Hotel>> GetHotel(int id)
         {
+            // TODO: Handle if id doesnt exist in db
             return await hotels.GetById(id);
         }
 
