@@ -33,6 +33,20 @@ namespace async_inn.Services
             return await _context.Amenities.FindAsync(id);
         }
 
+        public async Task<ActionResult<bool>> RemoveAmenity(int id)
+        {
+            var amenity = await _context.Amenities.FindAsync(id);
+            if (amenity == null)
+            {
+                return false;
+            }
+
+            _context.Amenities.Remove(amenity);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
         public async Task<bool> UpdateAmenity(int id, Amenity amenity)
         {
             if (id != amenity.Id)

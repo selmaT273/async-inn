@@ -11,5 +11,6 @@ namespace async_inn.Services
         Task<ActionResult<Amenity>> GetById(int id);
         Task<bool> UpdateAmenity(int id, Amenity amenity);
         Task CreateAmenity(Amenity amenity);
+        Task<ActionResult<bool>> RemoveAmenity(int id);
     }
 }

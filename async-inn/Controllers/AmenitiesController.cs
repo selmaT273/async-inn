@@ -66,18 +66,9 @@ namespace async_inn.Controllers
 
         // DELETE: api/Amenities/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAmenity(int id)
+        public async Task<ActionResult<bool>> DeleteAmenity(int id)
         {
-            var amenity = await _context.Amenities.FindAsync(id);
-            if (amenity == null)
-            {
-                return NotFound();
-            }
-
-            _context.Amenities.Remove(amenity);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return await amenities.RemoveAmenity(id);
         }
 
         private bool AmenityExists(int id)
