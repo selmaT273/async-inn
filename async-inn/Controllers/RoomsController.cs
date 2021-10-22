@@ -68,18 +68,10 @@ namespace async_inn.Controllers
 
         // DELETE: api/Rooms/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteRoom(int id)
+        public async Task<ActionResult<bool>> DeleteRoom(int id)
         {
-            var room = await _context.Rooms.FindAsync(id);
-            if (room == null)
-            {
-                return NotFound();
-            }
-
-            _context.Rooms.Remove(room);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            //TODO: Refactor to return BadRequest() or NotFound() or NoContent()
+            return await rooms.RemoveRoom(id);
         }
 
         private bool RoomExists(int id)

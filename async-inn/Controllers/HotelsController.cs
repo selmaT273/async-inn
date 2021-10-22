@@ -70,6 +70,7 @@ namespace async_inn.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> DeleteHotel(int id)
         {
+            // TODO: Refactor to return BadRequest() or NotFound() or NoContent()
             return await hotels.RemoveHotel(id);
         }
 

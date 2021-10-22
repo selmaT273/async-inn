@@ -34,6 +34,20 @@ namespace async_inn.Services
             return await _context.Rooms.FindAsync(id);
         }
 
+        public async Task<ActionResult<bool>> RemoveRoom(int id)
+        {
+            var room = await _context.Rooms.FindAsync(id);
+            if (room == null)
+            {
+                return false;
+            }
+
+            _context.Rooms.Remove(room);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
         public async Task<bool> UpdateRoom(int id, Room room)
         {
             if (id != room.Id)
