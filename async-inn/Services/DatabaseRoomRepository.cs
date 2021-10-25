@@ -18,7 +18,7 @@ namespace async_inn.Services
             _context = context;
         }
 
-        public async Task AddAmenityToRoom(int amenityId, int roomId)
+        public async Task AddAmenityToRoom(int roomId, int amenityId)
         {
             var roomAmenity = new RoomAmenity
             {
@@ -54,6 +54,17 @@ namespace async_inn.Services
                 .FirstOrDefaultAsync(r => r.Id == id);
             
             return room;
+        }
+
+        public async Task RemoveAmenityFromRoom(int roomId, int amenityId)
+        {
+            var roomAmenity = await _context.RoomAmenities
+                .FirstOrDefaultAsync(ra =>
+                    ra.RoomId == roomId &&
+                    ra.AmenityId == amenityId);
+
+            _context.RoomAmenities.Remove(roomAmenity);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<ActionResult<bool>> RemoveRoom(int id)

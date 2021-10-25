@@ -13,6 +13,7 @@ namespace async_inn.Services
         Task CreateRoom(Room room);
         Task<bool> UpdateRoom(int id, Room room);
         Task<ActionResult<bool>> RemoveRoom(int id);
-        Task AddAmenityToRoom(int amenityId, int roomId);
+        Task AddAmenityToRoom(int roomId, int amenityId);
+        Task RemoveAmenityFromRoom(int id, int amenityId);
     }
 }
