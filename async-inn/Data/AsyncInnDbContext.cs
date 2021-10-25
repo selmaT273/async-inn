@@ -19,10 +19,15 @@ namespace async_inn.Data
 
         public DbSet<Amenity> Amenities { get; set; }
 
+        public DbSet<RoomAmenity> RoomAmenities { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<HotelRoom>()
                 .HasKey(h => new { h.HotelId, h.RoomId });
+
+            modelBuilder.Entity<RoomAmenity>()
+                .HasKey(r => new { r.AmenityId, r.RoomId });
         }
     }
 }
