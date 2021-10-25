@@ -35,6 +35,8 @@ namespace async_inn.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<HotelRoom>> GetHotelRoom(int id)
         {
+            // return await hotelRooms.GetById(id);
+
             var hotelRoom = await _context.HotelRooms.FindAsync(id);
 
             if (hotelRoom == null)

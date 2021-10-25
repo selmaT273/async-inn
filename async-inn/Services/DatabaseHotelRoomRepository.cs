@@ -26,5 +26,17 @@ namespace async_inn.Services
                .ThenInclude(r => r.RoomAmenities)
                .ToListAsync();
         }
+
+        //public Task<ActionResult<HotelRoom>> GetById(int hotelId, int roomId)
+        //{
+        //    var hotelRoom = await _context.HotelRooms.FindAsync(id);
+
+        //    if (hotelRoom == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return hotelRoom;
+        //}
     }
 }
