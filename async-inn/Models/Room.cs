@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace async_inn.Models
@@ -13,6 +14,7 @@ namespace async_inn.Models
         [Required]
         public LayoutType Layout { get; set; }
 
+        public List<RoomAmenity> RoomAmenities { get; set; }
 
         public enum LayoutType
         { 
