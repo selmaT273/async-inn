@@ -51,6 +51,8 @@ namespace async_inn
             services.AddScoped<IRoomRepository, DatabaseRoomRepository>();
 
             services.AddScoped<IAmenityRepository, DatabaseAmenitiyRepository>();
+
+            services.AddScoped<IHotelRoomRepository, DatabaseHotelRoomRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -15,7 +15,6 @@ namespace async_inn.Controllers
     [ApiController]
     public class HotelsController : ControllerBase
     {
-
         private readonly IHotelRepository hotels;
         private readonly AsyncInnDbContext _context;
 

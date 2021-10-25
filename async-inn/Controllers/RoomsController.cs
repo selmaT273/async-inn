@@ -76,7 +76,7 @@ namespace async_inn.Controllers
         }
 
         [HttpPost]
-        [Route("{id}/Amenities/{amenityId}")]
+        [Route("{id}/Amenity/{amenityId}")]
         public async Task<IActionResult> AddAmenity(int id, int amenityId)
         {
             await rooms.AddAmenityToRoom(id, amenityId);
@@ -84,7 +84,7 @@ namespace async_inn.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}/Amenities/{amenityId}")]
+        [Route("{id}/Amenity/{amenityId}")]
         public async Task<IActionResult> RemoveAmenity(int id, int amenityId)
         {
             await rooms.RemoveAmenityFromRoom(id, amenityId);
