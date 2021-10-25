@@ -36,6 +36,7 @@ namespace async_inn.Controllers
         public async Task<ActionResult<Room>> GetRoom(int id)
         {
             // TODO: Handle if id is not found
+
             return await rooms.GetById(id);
         }
 
@@ -72,6 +73,14 @@ namespace async_inn.Controllers
         {
             //TODO: Refactor to return BadRequest() or NotFound() or NoContent()
             return await rooms.RemoveRoom(id);
+        }
+
+        [HttpPost]
+        [Route("{id}/Amenities/{amenityId}")]
+        public async Task<IActionResult> AddAmenity(int id, int amenityId)
+        {
+            await rooms.AddAmenityToRoom(amenityId, id);
+            return NoContent();
         }
 
         private bool RoomExists(int id)

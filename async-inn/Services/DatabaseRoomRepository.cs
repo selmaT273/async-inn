@@ -18,6 +18,18 @@ namespace async_inn.Services
             _context = context;
         }
 
+        public async Task AddAmenityToRoom(int amenityId, int roomId)
+        {
+            var roomAmenity = new RoomAmenity
+            {
+                RoomId = roomId,
+                AmenityId = amenityId,
+            };
+
+            _context.RoomAmenities.Add(roomAmenity);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task CreateRoom(Room room)
         {
             _context.Rooms.Add(room);
@@ -36,7 +48,12 @@ namespace async_inn.Services
 
         public async Task<ActionResult<Room>> GetById(int id)
         {
-            return await _context.Rooms.FindAsync(id);
+            Room room = await _context.Rooms
+                .Include(r => r.RoomAmenities)
+                .ThenInclude(ra => ra.Amenity)
+                .FirstOrDefaultAsync(r => r.Id == id);
+            
+            return room;
         }
 
         public async Task<ActionResult<bool>> RemoveRoom(int id)
