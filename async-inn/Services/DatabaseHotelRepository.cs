@@ -27,7 +27,6 @@ namespace async_inn.Services
 
         public async Task<List<Hotel>> GetAll()
         {
-
             return await _context.Hotels
                 .Include(h => h.HotelRooms)
                 .ThenInclude(hr => hr.Room)
@@ -39,7 +38,12 @@ namespace async_inn.Services
         // TODO: Handle if Id does not exist
         public async Task<Hotel> GetById(int id)
         {
-            return await _context.Hotels.FindAsync(id);
+            return await _context.Hotels
+                .Include(h => h.HotelRooms)
+                .ThenInclude(hr => hr.Room)
+                .ThenInclude(r => r.RoomAmenities)
+                .ThenInclude(ra => ra.Amenity)
+                .FirstOrDefaultAsync(h => h.Id == id);
         }
 
         public async Task<bool> RemoveHotel(int id)
