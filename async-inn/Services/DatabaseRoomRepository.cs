@@ -26,7 +26,12 @@ namespace async_inn.Services
 
         public async Task<List<Room>> GetAll()
         {
-            return await _context.Rooms.ToListAsync();
+            List<Room> result = await _context.Rooms
+                .Include(r => r.RoomAmenities)
+                .ThenInclude(ra => ra.Amenity)
+                .ToListAsync();
+
+            return result;
         }
 
         public async Task<ActionResult<Room>> GetById(int id)
