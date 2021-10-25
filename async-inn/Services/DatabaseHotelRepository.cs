@@ -27,7 +27,13 @@ namespace async_inn.Services
 
         public async Task<List<Hotel>> GetAll()
         {
-            return await _context.Hotels.ToListAsync();
+
+            return await _context.Hotels
+                .Include(h => h.HotelRooms)
+                .ThenInclude(hr => hr.Room)
+                .ThenInclude(r => r.RoomAmenities)
+                .ThenInclude(ra => ra.Amenity)
+                .ToListAsync();
         }
 
         // TODO: Handle if Id does not exist
