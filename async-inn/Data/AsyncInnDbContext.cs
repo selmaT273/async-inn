@@ -29,10 +29,10 @@ namespace async_inn.Data
             modelBuilder.Entity<RoomAmenity>()
                 .HasKey(r => new { r.AmenityId, r.RoomId });
 
-            //modelBuilder.Entity<HotelRoom>()
-            //    .HasData(
-            //        new HotelRoom { HotelId = 2, RoomId = 1}
-            //    );
+            modelBuilder.Entity<HotelRoom>()
+                .HasData(
+                    new HotelRoom { HotelId = 2, RoomNumber = 1, RoomId = 1, Rate = 99.00m, PetFriendly = true }
+                );
         }
     }
 }
