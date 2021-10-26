@@ -37,9 +37,17 @@ namespace async_inn.Services
             return result;
         }
 
-        public async Task<ActionResult<Amenity>> GetById(int id)
+        public async Task<ActionResult<AmenityDTO>> GetById(int id)
         {
-            return await _context.Amenities.FindAsync(id);
+            AmenityDTO result = await _context.Amenities
+                .Select(amenity => new AmenityDTO
+                {
+                    Id = amenity.Id,
+                    Name = amenity.Name,
+                })
+                .FirstOrDefaultAsync(amenity => amenity.Id == id);
+
+            return result;
         }
 
         public async Task<ActionResult<bool>> RemoveAmenity(int id)

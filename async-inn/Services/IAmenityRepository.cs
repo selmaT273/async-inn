@@ -9,7 +9,7 @@ namespace async_inn.Services
     public interface IAmenityRepository
     {
         Task<ActionResult<IEnumerable<AmenityDTO>>> GetAll();
-        Task<ActionResult<Amenity>> GetById(int id);
+        Task<ActionResult<AmenityDTO>> GetById(int id);
         Task<bool> UpdateAmenity(int id, Amenity amenity);
         Task CreateAmenity(Amenity amenity);
         Task<ActionResult<bool>> RemoveAmenity(int id);
