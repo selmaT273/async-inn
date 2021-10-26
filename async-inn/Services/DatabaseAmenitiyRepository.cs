@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using async_inn.Data;
 using async_inn.Models;
+using async_inn.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,9 +24,17 @@ namespace async_inn.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ActionResult<IEnumerable<Amenity>>> GetAll()
+        public async Task<ActionResult<IEnumerable<AmenityDTO>>> GetAll()
         {
-            return await _context.Amenities.ToListAsync();
+            List<AmenityDTO> result = await _context.Amenities
+                .Select(amenity => new AmenityDTO
+                {
+                    Id = amenity.Id,
+                    Name = amenity.Name
+                })
+                .ToListAsync();
+
+            return result;
         }
 
         public async Task<ActionResult<Amenity>> GetById(int id)
