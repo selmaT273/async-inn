@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace async_inn
 {
@@ -46,6 +47,15 @@ namespace async_inn
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
 
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo()
+                {
+                    Title = "Async Inn",
+                    Version = "v1",
+                });
+            });
+
             services.AddScoped<IHotelRepository, DatabaseHotelRepository>();
 
             services.AddScoped<IRoomRepository, DatabaseRoomRepository>();
@@ -62,6 +72,17 @@ namespace async_inn
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger(options =>
+            {
+                options.RouteTemplate = "/api/{documentName}/swagger.json";
+            });
+
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/api/v1/swagger.json", "Async Inn");
+                options.RoutePrefix = "docs";
+            });
 
             app.UseStaticFiles();
 
