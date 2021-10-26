@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using async_inn.Data;
 using async_inn.Models;
+using async_inn.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,11 +37,24 @@ namespace async_inn.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Room>> GetAll()
+        public async Task<List<RoomDTO>> GetAll()
         {
-            List<Room> result = await _context.Rooms
+            List<RoomDTO> result = await _context.Rooms
                 .Include(r => r.RoomAmenities)
                 .ThenInclude(ra => ra.Amenity)
+                .Select(room => new RoomDTO
+                {
+                    Id = room.Id,
+                    Name = room.Name,
+                    Layout = room.Layout,
+                    Amenities = room.RoomAmenities
+                        .Select(ra => new AmenityDTO
+                        {
+                            Id = ra.AmenityId,
+                            Name = ra.Amenity.Name
+                        })
+                        .ToList(),
+                })
                 .ToListAsync();
 
             return result;
