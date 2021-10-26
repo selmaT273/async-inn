@@ -92,6 +92,11 @@ namespace async_inn
             {
                 endpoints.MapControllers();
 
+                endpoints.MapGet("/", async context =>
+                {
+                    context.Response.Redirect("/docs");
+                });
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
