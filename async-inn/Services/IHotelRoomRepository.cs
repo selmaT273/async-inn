@@ -9,6 +9,6 @@ namespace async_inn.Services
     public interface IHotelRoomRepository
     {
         Task<ActionResult<IEnumerable<HotelRoom>>> GetAll(int hotelId);
-        // Task<ActionResult<HotelRoom>> GetById(int id);
+        Task<ActionResult<HotelRoom>> GetByRoomNumber(int hotelId, int roomNumber);
     }
 }
