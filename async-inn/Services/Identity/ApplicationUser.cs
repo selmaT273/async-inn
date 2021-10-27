@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
-namespace async_inn.Models.Identity
+namespace async_inn.Services.Identity
 {
     public class ApplicationUser : IdentityUser
     {

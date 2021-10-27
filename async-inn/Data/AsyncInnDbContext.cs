@@ -1,6 +1,6 @@
 ﻿using System;
 using async_inn.Models;
-using async_inn.Models.Identity;
+using async_inn.Services.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
