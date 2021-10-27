@@ -1,10 +1,12 @@
 ﻿using System;
 using async_inn.Models;
+using async_inn.Models.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace async_inn.Data
 {
-    public class AsyncInnDbContext : DbContext
+    public class AsyncInnDbContext : IdentityDbContext<ApplicationUser>
     {
         // Allow context to be configured by magic
         public AsyncInnDbContext(DbContextOptions options) : base(options)
