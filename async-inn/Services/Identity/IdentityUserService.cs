@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace async_inn.Services.Identity
 {
@@ -13,7 +14,7 @@ namespace async_inn.Services.Identity
             this.userManager = userManager;
         }
 
-        public async Task<ApplicationUser> Register(RegisterData data)
+        public async Task<ApplicationUser> Register(RegisterData data, ModelStateDictionary modelState)
         {
             ApplicationUser user = new ApplicationUser
             {
@@ -26,6 +27,16 @@ namespace async_inn.Services.Identity
             if (result.Succeeded)
             {
                 return user;
+            }
+
+            foreach (IdentityError error in result.Errors)
+            {
+                string errorKey =
+                    error.Code.Contains("Password") ? nameof(data.Password) :
+                    error.Code.Contains("Email") ? nameof(data.Email) :
+                    error.Code.Contains("UserName") ? nameof(data.Username) :
+                    "";
+                modelState.AddModelError(errorKey, error.Description);
             }
 
             return null;
