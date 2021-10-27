@@ -60,11 +60,22 @@ namespace async_inn.Services
             return result;
         }
 
-        public async Task<ActionResult<Room>> GetById(int id)
+        public async Task<ActionResult<RoomDTO>> GetById(int id)
         {
-            Room room = await _context.Rooms
-                .Include(r => r.RoomAmenities)
-                .ThenInclude(ra => ra.Amenity)
+            RoomDTO room = await _context.Rooms
+                .Select(room => new RoomDTO
+                {
+                    Id = room.Id,
+                    Name = room.Name,
+                    Layout = room.Layout,
+                    Amenities = room.RoomAmenities
+                        .Select(ra => new AmenityDTO
+                        {
+                            Id = ra.AmenityId,
+                            Name = ra.Amenity.Name,
+                        })
+                        .ToList(),
+                })
                 .FirstOrDefaultAsync(r => r.Id == id);
             
             return room;

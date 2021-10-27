@@ -10,7 +10,7 @@ namespace async_inn.Services
     public interface IRoomRepository
     {
         Task<List<RoomDTO>> GetAll();
-        Task<ActionResult<Room>> GetById(int id);
+        Task<ActionResult<RoomDTO>> GetById(int id);
         Task CreateRoom(Room room);
         Task<bool> UpdateRoom(int id, Room room);
         Task<ActionResult<bool>> RemoveRoom(int id);
