@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using async_inn.Data;
+using async_inn.Models.Identity;
 using async_inn.Models.Services;
 using async_inn.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -63,6 +65,12 @@ namespace async_inn
             services.AddScoped<IAmenityRepository, DatabaseAmenitiyRepository>();
 
             services.AddScoped<IHotelRoomRepository, DatabaseHotelRoomRepository>();
+
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+                {
+                    options.User.RequireUniqueEmail = true;
+                })
+                .AddEntityFrameworkStores<AsyncInnDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
