@@ -13,14 +13,22 @@ namespace async_inn.Services.Identity
             this.userManager = userManager;
         }
 
-        public async Task Register(RegisterData data)
+        public async Task<ApplicationUser> Register(RegisterData data)
         {
             ApplicationUser user = new ApplicationUser
             {
                 Email = data.Email,
                 UserName = data.Username
             };
-            await userManager.CreateAsync(user, data.Password);
+            
+            IdentityResult result = await userManager.CreateAsync(user, data.Password);
+
+            if (result.Succeeded)
+            {
+                return user;
+            }
+
+            return null;
         }
     }
 }

@@ -22,7 +22,12 @@ namespace async_inn.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterData data)
         {
-            await userService.Register(data);
+            ApplicationUser user = await userService.Register(data);
+            if(user == null)
+            {
+                return BadRequest();
+            }
+
             return Ok();
         }
     }

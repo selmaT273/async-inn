@@ -5,6 +5,6 @@ namespace async_inn.Services.Identity
 {
     public interface IUserService
     {
-        Task Register(RegisterData data);
+        Task<ApplicationUser> Register(RegisterData data);
     }
 }
