@@ -14,7 +14,7 @@ namespace async_inn.Services.Identity
             this.userManager = userManager;
         }
 
-        public async Task<ApplicationUser> Register(RegisterData data, ModelStateDictionary modelState)
+        public async Task<UserDTO> Register(RegisterData data, ModelStateDictionary modelState)
         {
             ApplicationUser user = new ApplicationUser
             {
@@ -26,7 +26,12 @@ namespace async_inn.Services.Identity
 
             if (result.Succeeded)
             {
-                return user;
+                return new UserDTO
+                {
+                    UserId = user.Id,
+                    Email = user.Email,
+                    Username = user.UserName,
+                };
             }
 
             foreach (IdentityError error in result.Errors)

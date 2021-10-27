@@ -20,15 +20,15 @@ namespace async_inn.Controllers
         }
         
         [HttpPost("Register")]
-        public async Task<IActionResult> Register(RegisterData data)
+        public async Task<ActionResult<UserDTO>> Register(RegisterData data)
         {
-            ApplicationUser user = await userService.Register(data, this.ModelState);
+            UserDTO user = await userService.Register(data, this.ModelState);
             if(user == null)
             {
                 return BadRequest(new ValidationProblemDetails(ModelState));
             }
 
-            return Ok();
+            return user;
         }
     }
 }
