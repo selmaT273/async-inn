@@ -14,6 +14,23 @@ namespace async_inn.Services.Identity
             this.userManager = userManager;
         }
 
+        public async Task<UserDTO> Authenticate(LoginData data)
+        {
+            ApplicationUser user = await userManager.FindByNameAsync(data.Username);
+
+            if(!await userManager.CheckPasswordAsync(user, data.Password))
+            {
+                return null;
+            }
+
+            return new UserDTO
+            {
+                UserId = user.Id,
+                Username = user.UserName,
+                Email = user.Email,
+            };
+        }
+
         public async Task<UserDTO> Register(RegisterData data, ModelStateDictionary modelState)
         {
             ApplicationUser user = new ApplicationUser

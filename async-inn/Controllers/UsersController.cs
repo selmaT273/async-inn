@@ -30,5 +30,18 @@ namespace async_inn.Controllers
 
             return user;
         }
+
+        [HttpPost("Login")]
+        public async Task<ActionResult<UserDTO>> Login(LoginData data)
+        {
+            UserDTO user = await userService.Authenticate(data);
+
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            return user;
+        }
     }
 }
