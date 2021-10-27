@@ -19,9 +19,10 @@ namespace async_inn.Controllers
             this.userService = userService;
         }
         
-        [HttpPost]
+        [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterData data)
         {
+            await userService.Register(data);
             return Ok();
         }
     }
