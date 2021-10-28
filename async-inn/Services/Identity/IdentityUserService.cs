@@ -25,11 +25,18 @@ namespace async_inn.Services.Identity
                 return null;
             }
 
+            return await GenerateUserDTO(user);
+
+        }
+
+        private async Task<UserDTO> GenerateUserDTO(ApplicationUser user)
+        {
             return new UserDTO
             {
                 UserId = user.Id,
                 Username = user.UserName,
                 Email = user.Email,
+                Token = await jwtService.GetToken(user, TimeSpan.FromMinutes(10))
             };
         }
 
@@ -45,12 +52,7 @@ namespace async_inn.Services.Identity
 
             if (result.Succeeded)
             {
-                return new UserDTO
-                {
-                    UserId = user.Id,
-                    Email = user.Email,
-                    Username = user.UserName,
-                };
+                return await GenerateUserDTO(user);
             }
 
             foreach (IdentityError error in result.Errors)
