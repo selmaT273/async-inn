@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -66,6 +67,17 @@ namespace async_inn.Services.Identity
             }
 
             return null;
+        }
+
+        public async Task<UserDTO> GetUser(ClaimsPrincipal principal)
+        {
+            ApplicationUser user = await userManager.GetUserAsync(principal);
+            if(user == null)
+            {
+                return null;
+            }
+
+            return await GenerateUserDTO(user);
         }
     }
 }
