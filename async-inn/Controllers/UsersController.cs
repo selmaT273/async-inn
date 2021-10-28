@@ -20,6 +20,7 @@ namespace async_inn.Controllers
             this.userService = userService;
         }
         
+        [Authorize(Roles = "District Manager")]
         [HttpPost("Register")]
         public async Task<ActionResult<UserDTO>> Register(RegisterData data)
         {
