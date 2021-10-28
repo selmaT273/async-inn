@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using async_inn.Data;
 using async_inn.Models;
 using async_inn.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace async_inn.Controllers
 {
+    [Authorize(Roles = "District Manager, Property Manager, Agent")]
     [Route("api/Hotels/{hotelId}/Rooms")]
     [ApiController]
     public class HotelRoomsController : ControllerBase
@@ -25,6 +27,7 @@ namespace async_inn.Controllers
         }
 
         // GET: api/HotelRoom
+        [Authorize(Roles = "District Manager, Property Manager")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<HotelRoom>>> GetHotelRooms(int hotelId)
         {
@@ -71,6 +74,7 @@ namespace async_inn.Controllers
 
         // POST: api/HotelRoom
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "District Manager, Property Manager")]
         [HttpPost]
         public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom)
         {
@@ -95,6 +99,7 @@ namespace async_inn.Controllers
         }
 
         // DELETE: api/HotelRoom/5
+        [Authorize(Roles = "District Manager")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteHotelRoom(int id)
         {

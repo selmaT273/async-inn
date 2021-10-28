@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using async_inn.Data;
 using async_inn.Models;
 using async_inn.Models.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace async_inn.Controllers
 {
+    [Authorize(Roles = "District Manager")]
     [Route("api/[controller]")]
     [ApiController]
     public class HotelsController : ControllerBase
