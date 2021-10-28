@@ -1,6 +1,7 @@
 ﻿using System;
 using async_inn.Models;
 using async_inn.Services.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,6 +33,22 @@ namespace async_inn.Data
 
             modelBuilder.Entity<RoomAmenity>()
                 .HasKey(r => new { r.AmenityId, r.RoomId });
+
+            SeedRole(modelBuilder, "District Manager");
+            SeedRole(modelBuilder, "Property Manager");
+            SeedRole(modelBuilder, "Agent");
+        }
+
+        private void SeedRole(ModelBuilder modelBuilder, string roleName)
+        {
+            IdentityRole role = new IdentityRole
+            {
+                Id = roleName,
+                Name = roleName,
+                NormalizedName = roleName.ToUpper(),
+                ConcurrencyStamp = Guid.Empty.ToString(),
+            };
+            modelBuilder.Entity<IdentityRole>().HasData(role);
         }
     }
 }

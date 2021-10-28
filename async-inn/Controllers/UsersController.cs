@@ -49,7 +49,14 @@ namespace async_inn.Controllers
         [HttpGet("[action]")]
         public async Task<ActionResult<UserDTO>> Self()
         {
-            return await userService.GetUser(this.User);
+            UserDTO user = await userService.GetUser(this.User);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return user;
         }
     }
 }
