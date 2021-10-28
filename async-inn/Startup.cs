@@ -73,6 +73,7 @@ namespace async_inn
                 .AddEntityFrameworkStores<AsyncInnDbContext>();
 
             services.AddScoped<IUserService, IdentityUserService>();
+            services.AddSingleton<JwtService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
