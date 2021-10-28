@@ -8,10 +8,12 @@ namespace async_inn.Services.Identity
     public class IdentityUserService : IUserService
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly JwtService jwtService;
 
         public IdentityUserService(UserManager<ApplicationUser> userManager, JwtService jwtService)
         {
             this.userManager = userManager;
+            this.jwtService = jwtService;
         }
 
         public async Task<UserDTO> Authenticate(LoginData data)
