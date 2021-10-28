@@ -6,6 +6,7 @@ using async_inn.Data;
 using async_inn.Models.Services;
 using async_inn.Services;
 using async_inn.Services.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -73,7 +74,19 @@ namespace async_inn
                 .AddEntityFrameworkStores<AsyncInnDbContext>();
 
             services.AddScoped<IUserService, IdentityUserService>();
-            services.AddSingleton<JwtService>();
+            services.AddScoped<JwtService>();
+
+            services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = JwtService.GetValidationParameters(Configuration);
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,6 +103,7 @@ namespace async_inn
                 app.UseDeveloperExceptionPage();
             }
 
+
             app.UseSwagger(options =>
             {
                 options.RouteTemplate = "/api/{documentName}/swagger.json";
@@ -104,6 +118,9 @@ namespace async_inn
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseDeveloperExceptionPage();
 
