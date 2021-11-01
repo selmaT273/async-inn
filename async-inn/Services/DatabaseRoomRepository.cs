@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using async_inn.Data;
 using async_inn.Models;
+using async_inn.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,20 +19,77 @@ namespace async_inn.Services
             _context = context;
         }
 
+        public async Task AddAmenityToRoom(int roomId, int amenityId)
+        {
+            var roomAmenity = new RoomAmenity
+            {
+                RoomId = roomId,
+                AmenityId = amenityId,
+            };
+
+            _context.RoomAmenities.Add(roomAmenity);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task CreateRoom(Room room)
         {
             _context.Rooms.Add(room);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Room>> GetAll()
+        public async Task<List<RoomDTO>> GetAll()
         {
-            return await _context.Rooms.ToListAsync();
+            List<RoomDTO> result = await _context.Rooms
+                .Include(r => r.RoomAmenities)
+                .ThenInclude(ra => ra.Amenity)
+                .Select(room => new RoomDTO
+                {
+                    Id = room.Id,
+                    Name = room.Name,
+                    Layout = room.Layout,
+                    Amenities = room.RoomAmenities
+                        .Select(ra => new AmenityDTO
+                        {
+                            Id = ra.AmenityId,
+                            Name = ra.Amenity.Name
+                        })
+                        .ToList(),
+                })
+                .ToListAsync();
+
+            return result;
         }
 
-        public async Task<ActionResult<Room>> GetById(int id)
+        public async Task<ActionResult<RoomDTO>> GetById(int id)
         {
-            return await _context.Rooms.FindAsync(id);
+            RoomDTO room = await _context.Rooms
+                .Select(room => new RoomDTO
+                {
+                    Id = room.Id,
+                    Name = room.Name,
+                    Layout = room.Layout,
+                    Amenities = room.RoomAmenities
+                        .Select(ra => new AmenityDTO
+                        {
+                            Id = ra.AmenityId,
+                            Name = ra.Amenity.Name,
+                        })
+                        .ToList(),
+                })
+                .FirstOrDefaultAsync(r => r.Id == id);
+            
+            return room;
+        }
+
+        public async Task RemoveAmenityFromRoom(int roomId, int amenityId)
+        {
+            var roomAmenity = await _context.RoomAmenities
+                .FirstOrDefaultAsync(ra =>
+                    ra.RoomId == roomId &&
+                    ra.AmenityId == amenityId);
+
+            _context.RoomAmenities.Remove(roomAmenity);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<ActionResult<bool>> RemoveRoom(int id)

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using async_inn.Data;
 using async_inn.Models;
 using async_inn.Services;
+using async_inn.Models.DTO;
 
 namespace async_inn.Controllers
 {
@@ -26,16 +27,17 @@ namespace async_inn.Controllers
 
         // GET: api/Rooms
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Room>>> GetRooms()
+        public async Task<ActionResult<IEnumerable<RoomDTO>>> GetRooms()
         {
             return await rooms.GetAll();
         }
 
         // GET: api/Rooms/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Room>> GetRoom(int id)
+        public async Task<ActionResult<RoomDTO>> GetRoom(int id)
         {
             // TODO: Handle if id is not found
+
             return await rooms.GetById(id);
         }
 
@@ -72,6 +74,22 @@ namespace async_inn.Controllers
         {
             //TODO: Refactor to return BadRequest() or NotFound() or NoContent()
             return await rooms.RemoveRoom(id);
+        }
+
+        [HttpPost]
+        [Route("{id}/Amenity/{amenityId}")]
+        public async Task<IActionResult> AddAmenity(int id, int amenityId)
+        {
+            await rooms.AddAmenityToRoom(id, amenityId);
+            return NoContent();
+        }
+
+        [HttpDelete]
+        [Route("{id}/Amenity/{amenityId}")]
+        public async Task<IActionResult> RemoveAmenity(int id, int amenityId)
+        {
+            await rooms.RemoveAmenityFromRoom(id, amenityId);
+            return NoContent();
         }
 
         private bool RoomExists(int id)
