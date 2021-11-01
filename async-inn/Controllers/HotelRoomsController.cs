@@ -43,10 +43,10 @@ namespace async_inn.Controllers
 
         // PUT: api/HotelRoom/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutHotelRoom(int id, HotelRoom hotelRoom)
+        [HttpPut("{roomNumber}")]
+        public async Task<IActionResult> PutHotelRoom(int hotelId, HotelRoom hotelRoom)
         {
-            if (id != hotelRoom.HotelId)
+            if (hotelId != hotelRoom.HotelId)
             {
                 return BadRequest();
             }
@@ -59,7 +59,7 @@ namespace async_inn.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!HotelRoomExists(id))
+                if (!HotelRoomExists(hotelId))
                 {
                     return NotFound();
                 }
@@ -76,7 +76,7 @@ namespace async_inn.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [Authorize(Roles = "District Manager, Property Manager")]
         [HttpPost]
-        public async Task<ActionResult<HotelRoom>> PostHotelRoom(HotelRoom hotelRoom)
+        public async Task<ActionResult<HotelRoom>> PostHotelRoom(int hotelId, HotelRoom hotelRoom)
         {
             _context.HotelRooms.Add(hotelRoom);
             try
@@ -100,10 +100,10 @@ namespace async_inn.Controllers
 
         // DELETE: api/HotelRoom/5
         [Authorize(Roles = "District Manager")]
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteHotelRoom(int id)
+        [HttpDelete("{roomNumber}")]
+        public async Task<IActionResult> DeleteHotelRoom(int hotelId, int roomNumber)
         {
-            var hotelRoom = await _context.HotelRooms.FindAsync(id);
+            var hotelRoom = await _context.HotelRooms.FindAsync(hotelId);
             if (hotelRoom == null)
             {
                 return NotFound();
